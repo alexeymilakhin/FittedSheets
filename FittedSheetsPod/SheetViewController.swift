@@ -95,7 +95,7 @@ public class SheetViewController: UIViewController {
         if #available(iOS 11.0, *) {
             inserts = UIApplication.shared.keyWindow?.safeAreaInsets ?? inserts
         }
-        inserts.top = max(inserts.top, 20)
+        inserts.top = max(inserts.top, UIApplication.shared.statusBarFrame.height)
         return inserts
     }
     
@@ -204,7 +204,7 @@ public class SheetViewController: UIViewController {
         self.view.addSubview(self.containerView) { (subview) in
             subview.edges(.left, .right).pinToSuperview()
             self.containerBottomConstraint = subview.bottom.pinToSuperview()
-            subview.top.pinToSuperview(inset: self.safeAreaInsets.top + 20, relation: .greaterThanOrEqual)
+            subview.top.pinToSuperview(inset: self.safeAreaInsets.top, relation: .greaterThanOrEqual)
             self.containerHeightConstraint = subview.height.set(self.height(for: self.containerSize))
             self.containerHeightConstraint.priority = UILayoutPriority(900)
         }
@@ -461,7 +461,7 @@ public class SheetViewController: UIViewController {
                 return height
             case .fullScreen:
                 let insets = self.safeAreaInsets
-                return UIScreen.main.bounds.height - insets.top - 20
+                return UIScreen.main.bounds.height - insets.top
             case .halfScreen:
                 return (UIScreen.main.bounds.height) / 2 + 24
         }
